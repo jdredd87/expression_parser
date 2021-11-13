@@ -3,12 +3,10 @@
  @author James Gregson (james.gregson@gmail.com)
  @brief example usage of the expression parser, see expression_parser.h for license details. demonstrates using the variable and function callbacks, as well as direct initialization of the data structures and customized error handling.
 */
+#include<Arduino.h>
 #include<stdio.h>
 #include<string.h>
-
-extern "C" {
 #include"expression_parser.h"
-}
 
 /**
  @brief user-defined variable callback function. see expression_parser.h for more details.
@@ -97,32 +95,32 @@ int main( void ){
 	// by the compiler.
 	value = parse_expression_with_callbacks( expr0, variable_callback, function_callback, &num_arguments );
 	if( value == value )
-		printf( "%s = %f\n\n", expr0, value );
+		Serial.printf( "%s = %f\n\n", expr0, value );
 	else 
-		printf( "\n" );
+		Serial.printf( "\n" );
 	
 	// should fail, since too many arguments are being passed
 	num_arguments = 2;
 	value = parse_expression_with_callbacks( expr0, variable_callback, function_callback, &num_arguments );
 	if( value == value )
-		printf( "%s = %f\n\n", expr0, value );
+		Serial.printf( "%s = %f\n\n", expr0, value );
 	else
-		printf( "\n" );
+		Serial.printf( "\n" );
 	
 	// increase the number of arguments, and now pass 4, should succeed
 	num_arguments = 4;
 	value = parse_expression_with_callbacks( expr1, variable_callback, function_callback, &num_arguments );
 	if( value == value )
-		printf( "%s = %f\n\n", expr1, value );
+		Serial.printf( "%s = %f\n\n", expr1, value );
 	else
-		printf( "\n" );
+		Serial.printf( "\n" );
 
 	// parse and expression with no variables or functions
 	value = parse_expression( expr2 );
 	if( value == value )
-		printf( "%s = %f\n\n", expr2, value );
+		Serial.printf( "%s = %f\n\n", expr2, value );
 	else
-		printf("\n");
+		Serial.printf("\n");
 	
 	// parse expr3, initializing the data structures from scratch (no malloc/free)
 	// and handling the errors directly from the calling code, rather than allowing the 
@@ -131,9 +129,9 @@ int main( void ){
 	parser_data_init( &pd, expr3, variable_callback, function_callback, &num_arguments );
 	value = parser_parse( &pd );
 	if( pd.error == NULL )
-		printf( "%s = %f\n\n", expr3, value );
+		Serial.printf( "%s = %f\n\n", expr3, value );
 	else 
-		printf( "CUSTOM ERROR HANDLING: %s\n\n", pd.error );
+		Serial.printf( "CUSTOM ERROR HANDLING: %s\n\n", pd.error );
 	
 	// repeat the previous test, with the number of arguments increased to avoid
 	// the error
@@ -141,9 +139,9 @@ int main( void ){
 	parser_data_init( &pd, expr3, variable_callback, function_callback, &num_arguments );
 	value = parser_parse( &pd );
 	if( pd.error == NULL )
-		printf( "%s = %f\n\n", expr3, value );
+		Serial.printf( "%s = %f\n\n", expr3, value );
 	else 
-		printf( "CUSTOM ERROR HANDLING: %s\n", pd.error );
+		Serial.printf( "CUSTOM ERROR HANDLING: %s\n", pd.error );
 	
 	
 	return 0;

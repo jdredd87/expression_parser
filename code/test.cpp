@@ -16,11 +16,11 @@
                                        double c_value, p_value; \
                                        c_value = (double) expr; \
                                        p_value = parse_expression( #expr ); \
-                                       printf("  '%s'\n", #expr ); \
+                                       Serial.printf("  '%s'\n", #expr ); \
                                        if( fabs( c_value - p_value ) > PARSER_BOOLEAN_EQUALITY_THRESHOLD ){ \
                                            *result = PARSER_FALSE; \
-										   printf("         C: %f\n", c_value ); \
-                                           printf("    Parsed: %f\n", p_value ); \
+										   Serial.printf("         C: %f\n", c_value ); \
+                                           Serial.printf("    Parsed: %f\n", p_value ); \
                                        } \
                                      }
 /**
@@ -30,11 +30,11 @@
                                                                                        double c_value, p_value; \
                                                                                        c_value = (double) expr; \
                                                                                        p_value = parse_expression_with_callbacks( #expr, user_vars, user_fncs, user_data ); \
-                                                                                       printf("  '%s'\n", #expr ); \
+                                                                                       Serial.printf("  '%s'\n", #expr ); \
 																					   if( fabs( c_value - p_value ) > PARSER_BOOLEAN_EQUALITY_THRESHOLD ){ \
                                                                                            *result = PARSER_FALSE; \
-																					       printf("         C: %f\n", c_value ); \
-                                                                                           printf("    Parsed: %f\n", p_value ); \
+																					       Serial.printf("         C: %f\n", c_value ); \
+                                                                                           Serial.printf("    Parsed: %f\n", p_value ); \
 																					  } \
 																					}
 /**
@@ -44,11 +44,11 @@
                                                double c_value, p_value; \
                                                c_value = (double) expr; \
                                                p_value = parse_expression( #expr ); \
-	                                           printf("  '%s'\n", #expr ); \
+	                                           Serial.printf("  '%s'\n", #expr ); \
                                                if( fabs( c_value - p_value ) > PARSER_BOOLEAN_EQUALITY_THRESHOLD ){ \
                                                    *result = PARSER_FALSE; \
-                                                   printf("         C: %f\n", c_value ); \
-                                                   printf("    Parsed: %f\n", p_value ); \
+                                                   Serial.printf("         C: %f\n", c_value ); \
+                                                   Serial.printf("    Parsed: %f\n", p_value ); \
 											   } \
                                              }
 /**
@@ -56,12 +56,12 @@
 */
 void run_boolean_not_tests(){
 	int result = 1;
-	printf("Testing boolean not:\n");
+	Serial.printf("Testing boolean not:\n");
 	parser_check_boolean( &result, 0.0 );
 	parser_check_boolean( &result, 2.0 );
 	parser_check_boolean( &result, !0.0 );
 	parser_check_boolean( &result, !3.0 );
-	printf( "%s\n\n", result ? "passed" : "failed" );
+	Serial.printf( "%s\n\n", result ? "passed" : "failed" );
 }
 
 /**
@@ -69,7 +69,7 @@ void run_boolean_not_tests(){
 */
 void run_boolean_comparison_tests(){
 	int result = 1;
-	printf("Testing boolean comparisons:\n");
+	Serial.printf("Testing boolean comparisons:\n");
 	parser_check_boolean( &result, 2.0 == 3.0 );
 	parser_check_boolean( &result, 2.0 == 2.0 );
 	parser_check_boolean( &result, 2.0 != 2.0 );
@@ -84,7 +84,7 @@ void run_boolean_comparison_tests(){
 	parser_check_boolean( &result, 2.0 >= 2.0 );
 	parser_check_boolean( &result, 2.0 >= 3.0 );
 	parser_check_boolean( &result, 3.0 >= 2.0 );
-	printf( "%s\n\n", result ? "passed" : "failed" );
+	Serial.printf( "%s\n\n", result ? "passed" : "failed" );
 }
 
 /**
@@ -92,7 +92,7 @@ void run_boolean_comparison_tests(){
 */
 void run_boolean_logical_tests(){
 	int result = 1;
-	printf("Testing boolean logical operations:\n" );
+	Serial.printf("Testing boolean logical operations:\n" );
 	parser_check_boolean( &result, 2.0 && 3.0 );
 	parser_check_boolean( &result, 2.0 && 0.0 );
 	parser_check_boolean( &result, 0.0 && 3.0 );
@@ -101,7 +101,7 @@ void run_boolean_logical_tests(){
 	parser_check_boolean( &result, 2.0 || 0.0 );
 	parser_check_boolean( &result, 0.0 || 3.0 );
 	parser_check_boolean( &result, 0.0 || 0.0 );
-	printf( "%s\n\n", result ? "passed" : "failed" );
+	Serial.printf( "%s\n\n", result ? "passed" : "failed" );
 }
 
 /**
@@ -109,7 +109,7 @@ void run_boolean_logical_tests(){
 */
 void run_boolean_compound_tests(){
 	int result = 1;
-	printf("Testing boolean expressions:\n" );
+	Serial.printf("Testing boolean expressions:\n" );
 	parser_check_boolean( &result, 2.0 > 3.0 && 2.0 == 2.0 );
 	parser_check_boolean( &result, 3.0 > 2.0 && 2.0 == 2.0 );
 	parser_check_boolean( &result, 3.0 > 2.0 || 1.0 == 0.0 );
@@ -131,7 +131,7 @@ void run_boolean_compound_tests(){
 	parser_check( &result, (3.0>=2.0)*5.0 + (3.0<2.0)*6.0 );
 	parser_check( &result, (1.0)*5.0 + (!1.0)*6.0 );
 	parser_check( &result, (!1.0)*5.0 + (1.0)*6.0 );
-	printf( "%s\n\n", result ? "passed" : "failed" );	
+	Serial.printf( "%s\n\n", result ? "passed" : "failed" );	
 }
 
 /** 
@@ -235,47 +235,47 @@ void test_user_functions_and_variables(){
 	
 	// tests of user-defined variables in isolation
 	result = PARSER_TRUE;
-	printf("Testing user-defined variables:\n");
+	Serial.printf("Testing user-defined variables:\n");
 	parser_check_with_callbacks( &result, a,             user_var_cb, NULL, NULL );
 	parser_check_with_callbacks( &result, b0,            user_var_cb, NULL, NULL );
 	parser_check_with_callbacks( &result, _variable_6__, user_var_cb, NULL, NULL );
-	printf( "%s\n\n", result ? "passed" : "failed" );		
+	Serial.printf( "%s\n\n", result ? "passed" : "failed" );		
 		
 	// tests of user-defined functions in isolation
 	result = PARSER_TRUE;
-	printf("Testing user-defined functions:\n");
+	Serial.printf("Testing user-defined functions:\n");
 	parser_check_with_callbacks( &result, user_func_0(),                                  NULL, user_fnc_cb, NULL );
 	parser_check_with_callbacks( &result, user_func_1( user_func_0() ),                   NULL, user_fnc_cb, NULL );
 	parser_check_with_callbacks( &result, user_func_2( user_func_1(2.0), user_func_0() ), NULL, user_fnc_cb, NULL );
 	parser_check_with_callbacks( &result, _user_func_3( 1.0, 2.0, 3.0 ),                  NULL, user_fnc_cb, NULL ); 
-	printf( "%s\n\n", result ? "passed" : "failed" );		
+	Serial.printf( "%s\n\n", result ? "passed" : "failed" );		
 	
 	// now try mixing and matching
 	result = PARSER_TRUE;
-	printf("Testing user-defined functions AND variables:\n");
+	Serial.printf("Testing user-defined functions AND variables:\n");
 	parser_check_with_callbacks( &result, _user_func_3( user_func_0(), user_func_2( a, b0 ), user_func_1( _variable_6__ ) ), user_var_cb, user_fnc_cb, NULL );
-	printf( "%s\n\n", result ? "passed" : "failed" );		
+	Serial.printf( "%s\n\n", result ? "passed" : "failed" );		
 	
 	// the following test failure behavior when functions/variables are referenced, but no callbacks
 	// are provided, or when those callbacks do not handle the called function/variable properly, e.g.
 	// when the functions are not defined, when the number of arguments is wrong, etc.
-	printf("\n\nTesting function error behaviour, this SHOULD fail because no function callback is set!\n" );
+	Serial.printf("\n\nTesting function error behaviour, this SHOULD fail because no function callback is set!\n" );
 	parser_check_with_callbacks( &result, user_func_0(), NULL, NULL, NULL );
 	
-	printf("\n\nTesting function error behaviour, this SHOULD fail because the function callback does not define the function!\n" );
+	Serial.printf("\n\nTesting function error behaviour, this SHOULD fail because the function callback does not define the function!\n" );
 	parser_check_with_callbacks( &result, user_func_4(1.0, 2.0, 3.0, 4.0), NULL, user_fnc_cb, NULL );
 	
-	printf( "\n\nTesting variable error behaviour, this SHOULD fail because no variable callback is set!\n" );
+	Serial.printf( "\n\nTesting variable error behaviour, this SHOULD fail because no variable callback is set!\n" );
 	parser_check_with_callbacks( &result, a, NULL, NULL, NULL );
 	
-	printf( "\n\nTesting variable error behaviour, this SHOULD fail because the variable callback does not define the variable!\n" );
+	Serial.printf( "\n\nTesting variable error behaviour, this SHOULD fail because the variable callback does not define the variable!\n" );
 	parser_check_with_callbacks( &result, b12, NULL, NULL, NULL );
 
     // check that some bad inputs fail
-    printf("\n\nTesting malformed inputs, these SHOULD fail because they are invalid expression strings!\n");
+    Serial.printf("\n\nTesting malformed inputs, these SHOULD fail because they are invalid expression strings!\n");
     run_bad_input_tests();
     
-	printf("\n\n");
+	Serial.printf("\n\n");
 }
 
 /**

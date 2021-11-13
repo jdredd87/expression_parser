@@ -1,6 +1,21 @@
 expression_parser
 =================
 
+jdredd87 fork notes
+-------------------------------------------
+
+Made this so can work with Arduino IDE and compatible devices.
+Only tested on Teensy 4.1 
+
+Renamed expression_parser.c to expression_parser.cpp
+ - Modified expression_pareser.cpp 
+ - Added Arduino.h
+ - Replaced printf calls with Serial.printf
+ - Removed files not really needed
+ - Added ArduinoMathTest.ino sketch for simple test
+
+-------------------------------------------
+
 A simple C expression parser.  Hand-rolled recursive descent style algorithm implements the parser, removing the need for external tools such as lex/yacc. Reads mathematical expression in infix notation (with a few built-in mathematical functions) and produces double-precision results.  
  
  The library handles:

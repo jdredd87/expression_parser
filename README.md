@@ -13,7 +13,9 @@ Renamed expression_parser.c to expression_parser.cpp
  - Replaced printf calls with Serial.printf
  - Removed files not really needed
  - Added ArduinoMathTest.ino sketch for simple test
-
+ - Added << for shift left
+ - Added >> for shift right
+ - Added & 
 -------------------------------------------
 
 A simple C expression parser.  Hand-rolled recursive descent style algorithm implements the parser, removing the need for external tools such as lex/yacc. Reads mathematical expression in infix notation (with a few built-in mathematical functions) and produces double-precision results.  
